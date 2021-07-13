@@ -1,12 +1,15 @@
 import os
 import base64
+from copy import deepcopy
 
 import pytest
 from friendlycrypto import FriendlyCryptographer
 
 
 class ExampleObj:
-    pass
+
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
 
 
 @pytest.mark.parametrize('salt', (
@@ -22,9 +25,11 @@ class ExampleObj:
     {'key': 'value', 'another': 123},
     {1, 2, 3, 'hello!'},
     123,
-    ExampleObj,
     None,
-
+    object(),
+    ExampleObj,
+    ExampleObj(),
+    ExampleObj(hello='hi', test=True, more=ExampleObj(more=None))
 ))
 @pytest.mark.parametrize('password', (
     b'MySecur3Pas5w0rd',
@@ -33,10 +38,29 @@ class ExampleObj:
     2102,
     None,
     {'password', 'as', 'a', 'set'},
+    object(),
+    ExampleObj,
+    ExampleObj(num=5, str='hi!', additional=ExampleObj()),
 ))
 def test_encryption_decryption(salt, data, password):
-    crypto = FriendlyCryptographer(salt=salt)
-    encrypted = crypto.encrypt(data, password)
-    decrepted = crypto.decrypt(encrypted, password)
 
-    assert data == decrepted, "Decrepted data doesn't match original data"
+    # Simulating two different instances of passwords that contain the
+    # same data. An example of this scenario will be when the data is
+    # decrypted in one script, and then decrypted using different instance
+    # from a different script, but the new instance contains the same data.
+    passcopy = deepcopy(password)
+
+    # Encrypt the data using one instance of the password,
+    # and decrypt it using the other one. If the decryption process fails,
+    # an `DecryptionError` will be raised and the test will fail.
+    crypto = FriendlyCryptographer(salt=salt, kdf_iterations=100)
+    encrypted = crypto.encrypt(data, password)
+    crypto.decrypt(encrypted, passcopy)
+
+    # There is no need to test for equality between and original and decrypted
+    # data: if the decreption is successful, the Fermet algorithm guarantees
+    # that the data is valid.
+    # There is not easy and straight forward way to compare between two
+    # different instances (original and after the encryption and decryption)
+    # process (the equality operator will work for simple objects but not
+    # guaranteed for every custom object), and thus we just don't!
