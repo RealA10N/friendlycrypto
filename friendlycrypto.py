@@ -6,6 +6,14 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
+__version__ = '1.0.0'
+__all__ = [
+    'Cryptographer',
+    'FriendlyCryptographer',
+    'DecryptionError',
+]
+
+
 class DecryptionError(Exception):
     """ An error raised when the decryption proccess fails. """
 
