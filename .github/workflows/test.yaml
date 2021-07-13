@@ -1,14 +1,5 @@
 name: ✔ Test
 
-on:
-  # Only when at least one python file is changed
-
-  push:
-    paths: "**.py"
-
-  pull_request:
-    paths: "**.py"
-
 jobs:
   test:
     runs-on: ubuntu-latest
