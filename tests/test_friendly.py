@@ -34,13 +34,8 @@ class ExampleObj:
 @pytest.mark.parametrize('password', (
     b'MySecur3Pas5w0rd',
     base64.b64encode(b'This is my password!\n'),
-    'mypassword',
-    2102,
-    None,
-    {'password', 'as', 'a', 'set'},
-    object(),
-    ExampleObj,
-    ExampleObj(num=5, str='hi!', additional=ExampleObj()),
+    'MyPassword'.encode('utf8'),
+    int.to_bytes(2102, 2, 'big'),
 ))
 def test_encryption_decryption(salt, data, password):
 

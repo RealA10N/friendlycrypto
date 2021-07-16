@@ -1,3 +1,22 @@
+"""
+
+Why the password can't be any Python object, similarly to the data?
+===================================================================
+
+In short: pickling two identical Python objects doesn't guarantee that the
+pickled bytes will be equal. https://docs.python.org/2/library/pickle.html#id20
+
+I wanted to be able to use regular Python objects as the data encrypted as well
+as the password/key for the encryption. However, while testing I found out that
+sometimes (in a fairly unpredictable manner), when pickleing two identical
+Python objects they can result in a different pickle bytes string, which ruins
+the idea of Python objects acting as a password.
+
+I have been researching since, but couldn't find a better way to convert any
+Python object into a one-to-one bytes-string, and thus, passwords are left to
+the user to convert into a byte-string.
+
+"""
 import base64
 import pickle
 
@@ -92,9 +111,9 @@ class FriendlyCryptographer(Cryptographer):
 
     # How does it work?
 
-    1)  The `encrypt` method recives the data and password as regular Python objects.
-    2)  Using the `pickle` module, those objects are converted to byte-strings that
-        represent them.
+    1)  The `encrypt` method recives the data as a regular Python object.
+    2)  Using the `pickle` module, the data is converted to a byte-strings that
+        represent the object.
     3)  The password bytes are then passed to a `Password-Based Key Derivation
         Function` that converts those bytes into a short, length fixed byte string
         that will be used as the key. It is possible to add salt to this process
@@ -104,25 +123,26 @@ class FriendlyCryptographer(Cryptographer):
 
     """
 
-    def encrypt(self, data, password) -> bytes:
-        """ Recives `data` and encrypts it into a string of bytes using the given
-        `password`. Both `data` and `password` can be any Python object, including
-        regular string, byte-strings, number, dictionaries, and complex objects
-        and instances of custom created classes. """
+    def encrypt(self, data, password: bytes) -> bytes:
+        """ Recives `data` and encrypts it into a string of bytes using the
+        given `password`. `data` can be any Python object, including regular
+        string, byte-strings, number, dictionaries, and complex objects and
+        instances of custom created classes. `password` must be a bytes-like
+        object. """
 
         return super().encrypt(
             pickle.dumps(data),
-            pickle.dumps(password)
+            password,
         )
 
-    def decrypt(self, data: bytes, password):
-        """ Recives an encrepted bytes-string and a password object, and returns
-        the original Python object that was encrypted using the password object.
-        """
+    def decrypt(self, data: bytes, password: bytes):
+        """ Recives an encrepted bytes-string and the password bytes, and
+        returns the original Python object that was encrypted using the
+        password. """
 
         decrepted_bytes = super().decrypt(
             data,
-            pickle.dumps(password)
+            password,
         )
 
         return pickle.loads(decrepted_bytes)
