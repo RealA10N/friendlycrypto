@@ -20,7 +20,7 @@ from friendlycrypto import Cryptographer
     base64.b64encode(b'This is my password!\n'),
 ))
 def test_encryption_decryption(salt, data, password):
-    crypto = Cryptographer(salt=salt)
+    crypto = Cryptographer(salt=salt, kdf_iterations=1)
     encrypted = crypto.encrypt(data, password)
     decrepted = crypto.decrypt(encrypted, password)
 

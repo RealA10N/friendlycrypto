@@ -53,7 +53,8 @@ def test_encryption_decryption(salt, data, password):
     # Encrypt the data using one instance of the password,
     # and decrypt it using the other one. If the decryption process fails,
     # an `DecryptionError` will be raised and the test will fail.
-    crypto = FriendlyCryptographer(salt=salt, kdf_iterations=100)
+    # kdf_iteration=1 for faster testing.
+    crypto = FriendlyCryptographer(salt=salt, kdf_iterations=1)
     encrypted = crypto.encrypt(data, password)
     crypto.decrypt(encrypted, passcopy)
 
