@@ -11,7 +11,7 @@ setup(
     py_modules=['friendlycrypto'],
     python_requires='>=3.6',
     install_requires=[
-        'cryptography>=3.4',
+        'cryptography>=3.4, <4.0',
     ],
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',
