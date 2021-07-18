@@ -1,6 +1,9 @@
 from setuptools import setup
 
 
+with open('README.md') as file:
+    README = file.read()
+
 setup(
     name='friendlycrypto',
     version='1.0.0',
@@ -8,6 +11,8 @@ setup(
     author='Alon Krymgand Osovsky',
     author_email='downtown2u@gmail.com',
     url='https://github.com/RealA10N/friendlycrypto',
+    long_description=README,
+    long_description_content_type='text/markdown',
     py_modules=['friendlycrypto'],
     python_requires='>=3.6',
     install_requires=[
