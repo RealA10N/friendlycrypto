@@ -10,6 +10,14 @@ A simple Python module that uses the [Fernet] secure algorithm to encrypt
 you Python objects with just one line of code.
 
 
+# Installation
+
+Simply install using the Python package manager:
+
+```console
+pip install friendlycrypto
+```
+
 # Usage
 
 ## Encrypting bytes
@@ -81,14 +89,6 @@ to just guess every option.
 
 The recommended and default value is `100_000`, and on my computer it takes
 approximately 0.1 seconds to compute.
-
-# Installation
-
-Simply install using the Python package manager:
-
-```console
-pip install friendlycrypto
-```
 
 
 [Fernet]: https://github.com/fernet/spec/
