@@ -7,7 +7,7 @@
 
 
 A simple Python module that uses the [Fernet] secure algorithm to encrypt
-you Python objects with just one line of code.
+your Python objects with just one line of code.
 
 
 # Installation
