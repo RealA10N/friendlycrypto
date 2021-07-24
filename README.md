@@ -1,7 +1,8 @@
 <div align="center">
     <h1><img src="https://raw.githubusercontent.com/RealA10N/friendlycrypto/master/FriendlyCrypto.png" alt="FriendlyCrypto" width="500px"></h1>
     <img src="https://img.shields.io/github/workflow/status/reala10n/friendlycrypto/%E2%9C%94%20Test/master">
-    <img src="https://img.shields.io/pypi/v/friendlycrypto">
+    <a href="https://pypi.org/project/friendlycrypto/">
+    <img src="https://img.shields.io/pypi/v/friendlycrypto"></a>
     <img src="https://img.shields.io/github/stars/reala10n/friendlycrypto?style=social">
 </div>
 
