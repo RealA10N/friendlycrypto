@@ -33,7 +33,7 @@ with open('img.png', 'rb') as original_f:
 # Encoding the password string into a bytes-string.
 key = input("Key for encryption: ").encode('utf8')
 
-# Encrypt the data usaing the 'Cryptographer' object
+# Encrypt the data using the 'Cryptographer' object
 grapher = Cryptographer()
 encrypted = grapher.encrypt(original_data, key)
 
@@ -57,7 +57,7 @@ data = {
 # Encoding the password string into a bytes-string.
 key = input("Key for encryption: ").encode('utf8')
 
-# Encrypt the data usaing the 'FriendlyCryptographer' object
+# Encrypt the data using the 'FriendlyCryptographer' object
 grapher = FriendlyCryptographer()
 encrypted = grapher.encrypt(data, key)
 
